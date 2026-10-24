@@ -55,6 +55,29 @@ describe("useClipboard", () => {
     expect(result.current.error).toBe("Clipboard permission was denied.");
   });
 
+  it("uses the fallback when the Clipboard API denies permission", async () => {
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: vi
+          .fn()
+          .mockRejectedValue(new DOMException("Denied", "NotAllowedError")),
+      },
+    });
+    mockExecCommand(true);
+    const { result } = renderHook(() => useClipboard({ resetAfterMs: 0 }));
+    let copyResult: Awaited<ReturnType<typeof result.current.copy>> | undefined;
+
+    await act(async () => {
+      copyResult = await result.current.copy("fallback text");
+    });
+
+    expect(copyResult).toEqual({ ok: true, method: "exec-command" });
+    expect(document.execCommand).toHaveBeenCalledWith("copy");
+    expect(result.current.status).toBe("success");
+    expect(result.current.error).toBeNull();
+  });
+
   it("uses the execCommand fallback when the Clipboard API is unavailable", async () => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
