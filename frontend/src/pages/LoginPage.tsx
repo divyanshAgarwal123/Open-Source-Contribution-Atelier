@@ -92,6 +92,7 @@ export function LoginPage() {
   const [requires2FA, setRequires2FA] = useState(false);
   const [useBackupCode, setUseBackupCode] = useState(false);
   const [error, setError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeWorkspaceStep, setActiveWorkspaceStep] = useState(0);
   const [activeSpark, setActiveSpark] = useState(0);
@@ -154,6 +155,11 @@ export function LoginPage() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
+    if (!username.trim()) {
+      setUsernameError("Email is required");
+      return;
+    }
+    setUsernameError("");
     setIsLoading(true);
     try {
       const payload: Record<string, string | boolean> = {
@@ -399,10 +405,25 @@ export function LoginPage() {
                       spellCheck={false}
                       placeholder="the_smartest@kid.com"
                       value={username}
-                      onChange={(event) => setUsername(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500"
-                      required
+                      onChange={(event) => {
+                        setUsername(event.target.value);
+                        if (event.target.value.trim()) setUsernameError("");
+                      }}
+                      aria-invalid={Boolean(usernameError)}
+                      aria-describedby={
+                        usernameError ? "username-error" : undefined
+                      }
+                      className={`mt-2 w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 ${usernameError ? "border-rose-500 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 dark:border-rose-400" : "border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700"}`}
                     />
+                    {usernameError && (
+                      <p
+                        id="username-error"
+                        role="alert"
+                        className="mt-1 text-sm text-rose-600 dark:text-rose-400"
+                      >
+                        {usernameError}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label
