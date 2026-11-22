@@ -1,0 +1,33 @@
+{
+  "name": "build",
+  "rows": [
+    {
+      "mode": "api",
+      "width": 1280,
+      "text": "\u23f1\ufe0f 5 MIN TO COMPLETE",
+      "lessonRequests": 1,
+      "badgeFits": true
+    },
+    {
+      "mode": "fallback",
+      "width": 390,
+      "text": "\u23f1\ufe0f 5 MIN TO COMPLETE",
+      "lessonRequests": 1,
+      "badgeFits": true
+    },
+    {
+      "mode": "absent",
+      "width": 390,
+      "text": "\u23f1\ufe0f 3 MIN READ",
+      "lessonRequests": 1,
+      "badgeFits": true
+    },
+    {
+      "mode": "invalid",
+      "width": 390,
+      "text": "\u23f1\ufe0f 3 MIN READ",
+      "lessonRequests": 1,
+      "badgeFits": true
+    }
+  ]
+}
