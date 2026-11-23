@@ -1,0 +1,20 @@
+[
+  {
+    "name": "desktop",
+    "width": 1280,
+    "openByKeyboard": true,
+    "persistsWhileEnabled": true,
+    "headerInert": true,
+    "escapeRestoresNavigation": true,
+    "persistsWhileDisabled": true
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "openByKeyboard": true,
+    "persistsWhileEnabled": true,
+    "headerInert": true,
+    "escapeRestoresNavigation": true,
+    "persistsWhileDisabled": true
+  }
+]
